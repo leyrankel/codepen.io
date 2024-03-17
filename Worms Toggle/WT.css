@@ -1,0 +1,136 @@
+:root {
+	--sz: 10vmin;
+	--sz1: calc(var(--sz) / 10);
+	--on: #269fe5; 
+	--no: #ff4444;
+	--bg: #212121;
+	--tr: all 0.5s ease 0s;
+}	
+
+@property --deg {
+	syntax: '<angle>';
+	inherits: false;
+	initial-value: 180deg;
+}
+
+* {
+	box-sizing: border-box;
+}	
+
+body {
+	margin: 0;
+	padding: 0;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: radial-gradient(var(--bg), #222);
+}
+
+.toggle {
+	position: relative;
+	width: calc(var(--sz) * 4);
+	height: calc(var(--sz) * 2);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+input {
+	display: none;
+}
+
+label {
+	--deg: 180deg;
+	position: absolute;
+	width: calc(var(--sz)* 4);
+	height: calc(var(--sz)* 2);
+	background: 
+		conic-gradient(from 0deg at 50% 50%, #fff0 0 var(--deg), var(--no) 0 100%),
+		conic-gradient(from calc(var(--deg) + 0deg) at 50% 50%, var(--on) 0 50%, #fff0 0 100%),
+		#272727;
+	border-radius: var(--sz);
+	pointer-events: none;
+	transition: var(--tr);
+	transition-property: --deg;
+	animation: start-worm 2s ease 0s 1;
+}
+
+@keyframes start-worm {
+	0%, 75% { --deg: 360deg; }
+}	
+
+#btn:checked + label {
+	--deg: 360deg;
+}
+
+label:before {
+	content: "";
+	position: absolute;
+	width: calc(var(--sz) * 1);
+	height: calc((var(--sz) * 2) + 2px);
+	left: calc(var(--sz1) * 15);
+	top: -1px;
+	transition: var(--tr);
+	--bg1: radial-gradient(circle at calc(0% - 2px) 50%, #fff0 calc(var(--sz1) * 2), var(--bg) calc(calc(var(--sz1) * 2) + 1px) 100%);
+	--bg2: radial-gradient(circle at calc(100% + 2px) 50%, #fff0 calc(var(--sz1) * 2), var(--bg) calc(calc(var(--sz1) * 2) + 1px) 100%);
+	background: var(--bg1), var(--bg1),	var(--bg2), var(--bg2),#f0f0;
+	transform: rotate(0deg);
+	background-repeat: no-repeat;
+	--bs: calc(var(--sz1) * 2.06) calc((var(--sz1) * 4) + 2px);
+	background-size: var(--bs), var(--bs), var(--bs), var(--bs), 100% 100%;
+	background-position: calc(50% - var(--sz1)) 0%, calc(50% - var(--sz1)) 100%, calc(50% + var(--sz1)) 0%, calc(50% + var(--sz1)) calc(100% + 0px), 0 0;
+}
+
+label:after {
+	content: "";
+	position: absolute;
+	background: var(--bg);
+	width: calc(var(--sz) * 3.12);
+	height: calc(var(--sz1) * 12);
+	left: calc(var(--sz1) * 4.25);
+	top: calc(var(--sz1) * 4);
+	transition: var(--tr);
+	border-radius: var(--sz);
+}
+
+.thumb {
+	position: absolute;
+	width: calc(var(--sz) * 1.5);
+	height: calc(var(--sz) * 1.2);
+	top: calc(var(--sz) / 2.5);
+	left: calc(var(--sz) / 2.25);
+	background: var(--no);
+	border-radius: var(--sz);
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
+	overflow: hidden;
+	pointer-events: all;
+	border: calc(var(--sz1) * 1.5) solid var(--bg);
+	transition: var(--tr);
+	transition-property: left;
+	animation: start-thumb 2s ease 0s 1;
+}
+
+@keyframes start-thumb {
+	0%, 75% { left: calc(100% - calc(var(--sz) / 0.5)); background: var(--on) }	
+	100% { left: calc(var(--sz) / 2.25); background: var(--no)}
+}
+
+label .thumb:hover {
+	background: var(--on);
+}
+
+#btn:checked + label .thumb {
+	left: calc(100% - calc(var(--sz) / 0.5));
+	background: var(--on);
+}
+
+#btn:checked + label .thumb:hover {
+	background: var(--no);
+}
