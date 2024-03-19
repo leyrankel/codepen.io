@@ -1,0 +1,36 @@
+<div id="menu">
+  <p id="controls">close controls</p>
+  <div id="showhide">
+    <hr>
+    <p>canvas size
+      (<input type="checkbox" id="autodimension" checked> auto)
+    </p>
+    <p><input type="number" id=twidth value=500 min=10 max=3000 step=1> W x <input type="number" id=theight value=200 min=10 max=3000 step=1> H</p>
+    <hr>
+    <p>cell size
+      (<input type="checkbox" id="cellsizerandom"> random)
+    </p>
+    <p><input type="range" id=cellsize value=0.8 min=0 max=1 step="any"></p>
+    <p>display cells: <input type="checkbox" id="displaygrid"></p>
+    <hr>
+    <p>pattern type
+      (<input type="checkbox" id="randompattern"> random)
+    </p>
+    <p><select id="geometry">
+        <option value="0">1</option>
+        <option value="1">2</option>
+        <option value="2">3</option>
+        <option value="3">1 - 2</option>
+        <option value="4">1 - 3</option>
+        <option value="5">2 - 3</option>
+        <option value="6" selected>1 - 2 - 3</option>
+      </select>
+    </p>
+    <hr>
+    <p>drawing speed: <input type="range" id="drawspeed" min="0" max="1" step="any" value="0.707"></p>
+    <p>with margin: <input type="checkbox" id="withmargin" checked></p>
+    <p>concentric: <input type="checkbox" id="concentric" checked></p>
+    <p>centered: <input type="checkbox" id="centered" checked></p>
+    <p>regularity: <input type="range" id="regularity" min="0" max="10" step="1" value="5"></p>
+  </div> <!-- showhide -->
+</div> <!-- menu -->
