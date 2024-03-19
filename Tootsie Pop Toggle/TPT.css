@@ -1,0 +1,334 @@
+* {
+	border: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+:root {
+	--hue: 223;
+	--hue-center: 18;
+	--hue-off: 3;
+	--hue-on: 133;
+	--bg: hsl(var(--hue),90%,85%);
+	--fg: hsl(var(--hue),90%,10%);
+	--trans-dur: 0.3s;
+	--trans-timing: cubic-bezier(0.65,0,0.35,1);
+	font-size: calc(56px + (112 - 56) * (100vw - 280px) / (3840 - 280));
+}
+body,
+input {
+	font: 1em/1.5 sans-serif;
+}
+body {
+	background-color: var(--bg);
+	color: var(--fg);
+	display: flex;
+	height: 100vh;
+	transition:
+		background-color var(--trans-dur),
+		color var(--trans-dur);
+}
+.switch {
+	--licked: 0;
+	--opacity: calc(1 - var(--licked) * 0.6);
+	--scale: calc(1 - var(--licked) * 0.4);
+	--scale-y: calc(1 - var(--licked) * 0.2);
+	--shadow-n: calc(-0.0625em * (1 - var(--licked)));
+	--shadow-p: calc(0.0625em * (1 - var(--licked)));
+	border-radius: 0.75em;
+	margin: auto;
+	position: relative;
+
+	&,
+	&__input {
+		-webkit-tap-highlight-color: transparent;	
+	}
+	&__input {
+		background-color: hsla(var(--hue),90%,70%,0);
+		border-radius: inherit;
+		box-shadow:
+			0 0 0 0.0625em hsl(var(--hue),90%,70%) inset,
+			0 0 0.125em 0.125em hsl(var(--hue),90%,50%,0);
+		cursor: pointer;
+		display: block;
+		outline: transparent;
+		position: relative;
+		width: 3em;
+		height: 1.5em;
+		transition:
+			background-color var(--trans-dur),
+			box-shadow calc(var(--trans-dur) / 2);
+		-webkit-appearance: none;
+		appearance: none;
+
+		&:before,
+		&:after {
+			transition:
+				box-shadow var(--trans-dur) var(--trans-timing),
+				transform var(--trans-dur) var(--trans-timing);
+		}
+		&:before {
+			background-color: hsl(var(--hue),10%,90%);
+			border-radius: 0.0625em;
+			box-shadow:
+				-0.0625em 0 0 hsl(0,0%,100%) inset,
+				0 0 0 hsl(var(--hue),10%,80%) inset;
+			pointer-events: none;
+			top: 50%;
+			left: 0.75em;
+			width: 0.125em;
+			height: 2.5em;
+			transform: translateX(-50%) rotate(-45deg) {
+				origin: 50% 0;
+			};
+
+			[dir="rtl"] & {
+				box-shadow:
+					0 0 0 hsl(0,0%,100%) inset,
+					0 -0.0625em 0 hsl(var(--hue),10%,80%) inset;
+				right: 0.75em;
+				left: auto;
+				transform: translateX(50%) rotate(45deg);
+			}
+		}
+		&:after {
+			background-color: hsl(var(--hue-center),70%,30%);
+			border-radius: 50%;
+			box-shadow:
+				0.0625em -0.0625em 0 hsl(var(--hue-center),70%,20%) inset,
+				0 0 0 0.125em hsl(var(--hue-center),70%,30%) inset,
+				-0.1875em 0.1875em 0 hsl(var(--hue-center),70%,40%) inset;
+			top: 0.375em;
+			left: 0.375em;
+			width: 0.75em;
+			height: 0.75em;
+
+			[dir="rtl"] & {
+				right: 0.375em;
+				left: auto;
+			}
+		}
+		&:active {
+			&:before {
+				transform: translateX(-50%) translateX(0.5em) rotate(-15deg);
+
+				[dir="rtl"] & {
+					transform: translateX(50%) translateX(-0.5em) rotate(15deg);
+				}
+			}
+			&:after {
+				transform: translateX(0.5em);
+
+				[dir="rtl"] & {
+					transform: translateX(-0.5em);
+				}
+			}
+		}
+		&:checked {
+			background-color: hsl(var(--hue),90%,70%);
+
+			&:before {
+				box-shadow:
+					0 0 0 hsl(0,0%,100%) inset,
+					0 -0.0625em 0 hsl(var(--hue),10%,80%) inset;
+				transform: translateX(-50%) translateX(1.5em) rotate(45deg);
+
+				[dir="rtl"] & {
+					box-shadow:
+						-0.0625em 0 0 hsl(0,0%,100%) inset,
+						0 0 0 hsl(var(--hue),10%,80%) inset;
+					transform: translateX(50%) translateX(-1.5em) rotate(-45deg);	
+				}
+			}
+			&:after {
+				transform: translateX(1.5em);
+
+				[dir="rtl"] & {
+					transform: translateX(-1.5em);
+				}
+			}
+		}
+		&:active:checked {
+			&:before {
+				transform: translateX(-50%) translateX(1em) rotate(15deg);
+
+				[dir="rtl"] & {
+					transform: translateX(50%) translateX(-1em) rotate(-15deg);
+				}
+			}
+			&:after {
+				transform: translateX(1em);
+
+				[dir="rtl"] & {
+					transform: translateX(-1em);
+				}
+			}
+		}
+		&:focus-visible {
+			box-shadow:
+				0 0 0 0.0625em hsl(var(--hue),90%,70%) inset,
+				0 0 0.125em 0.125em hsl(var(--hue),90%,50%);
+		}
+	}
+	&__pop {
+		background-color: hsl(var(--hue-off),90%,40%);
+		border-radius: 50%;
+		opacity: var(--opacity);
+		pointer-events: none;
+		position: absolute;
+		top: 0.125em;
+		left: 0.125em;
+		width: 1.25em;
+		height: 1.25em;
+		transform: scale(var(--scale));
+		transition:
+			background-color var(--trans-dur) var(--trans-timing),
+			opacity var(--trans-dur) var(--trans-timing),
+			transform var(--trans-dur) var(--trans-timing);
+
+		[dir="rtl"] & {
+			right: 0.125em;
+			left: auto;
+		}
+		&:before {
+			border-radius: inherit;
+			box-shadow:
+				0.0625em -0.0625em 0 hsl(var(--hue-off),90%,30%) inset,
+				0 0 0 0.125em hsl(var(--hue-off),90%,40%) inset,
+				-0.1875em 0.1875em 0 hsl(var(--hue-off),90%,50%) inset;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			transition: box-shadow var(--trans-dur) var(--trans-timing);
+		}
+		&:after {
+			background-color: hsl(var(--hue-off),90%,40%);
+			border-radius: 0.125em;
+			box-shadow:
+				var(--shadow-n) 0 0 hsl(var(--hue-off),90%,50%) inset,
+				var(--shadow-p) 0 0 hsl(var(--hue-off),90%,30%) inset,
+				0 -0.25em 0 hsl(var(--hue-off),90%,40%) inset,
+				0 -1.25em 0 hsl(var(--hue-off),90%,45%) inset;
+			opacity: var(--opacity);
+			top: -0.125em;
+			left: calc(50% - 0.25em);
+			width: 0.5em;
+			height: 1.5em;
+			transform: rotate(-45deg) scaleY(var(--scale-y));
+			transition:
+				background-color var(--trans-dur) var(--trans-timing),
+				box-shadow var(--trans-dur) var(--trans-timing),
+				transform var(--trans-dur) var(--trans-timing);
+
+			[dir="rtl"] & {
+				box-shadow:
+					var(--shadow-n) 0 0 hsl(var(--hue-off),90%,40%) inset,
+					var(--shadow-p) 0 0 hsl(var(--hue-off),90%,40%) inset,
+					0 -0.25em 0 hsl(var(--hue-off),90%,40%) inset,
+					0 -1.25em 0 hsl(var(--hue-off),90%,45%) inset;
+				right: calc(50% - 0.25em);
+				left: auto;
+				transform: rotate(45deg) scaleY(var(--scale-y));
+			}
+		}
+	}
+	&__input:before,
+	&__input:after,
+	&__pop:before,
+	&__pop:after {
+		content: "";
+		display: block;
+		position: absolute;
+	}
+	&__input:active + &__pop {
+		transform: translateX(0.5em) scale(var(--scale));
+
+		[dir="rtl"] & {
+			transform: translateX(-0.5em) scale(var(--scale));
+		}
+		&:after {
+			transform: rotate(-15deg) scaleY(var(--scale-y));
+
+			[dir="rtl"] & {
+				transform: rotate(15deg) scaleY(var(--scale-y));
+			}
+		}
+	}
+	&__input:checked + &__pop {
+		background-color: hsl(var(--hue-on),90%,30%);
+		transform: translateX(1.5em) scale(var(--scale));
+
+		[dir="rtl"] & {
+			transform: translateX(-1.5em) scale(var(--scale));
+		}
+		&:before {
+			box-shadow:
+				0.0625em -0.0625em 0 hsl(var(--hue-on),90%,20%) inset,
+				0 0 0 0.125em hsl(var(--hue-on),90%,30%) inset,
+				-0.1875em 0.1875em 0 hsl(var(--hue-on),90%,40%) inset;
+		}
+		&:after {
+			background-color: hsl(var(--hue-on),90%,30%);
+			box-shadow:
+				var(--shadow-n) 0 0 hsl(var(--hue-on),90%,30%) inset,
+				var(--shadow-p) 0 0 hsl(var(--hue-on),90%,30%) inset,
+				0 -0.25em 0 hsl(var(--hue-on),90%,30%) inset,
+				0 -1.25em 0 hsl(var(--hue-on),90%,35%) inset;
+			transform: rotate(45deg) scaleY(var(--scale-y));
+
+			[dir="rtl"] & {
+				box-shadow:
+					var(--shadow-n) 0 0 hsl(var(--hue-on),90%,40%) inset,
+					var(--shadow-p) 0 0 hsl(var(--hue-on),90%,20%) inset,
+					0 -0.25em 0 hsl(var(--hue-on),90%,30%) inset,
+					0 -1.25em 0 hsl(var(--hue-on),90%,35%) inset;
+				transform: rotate(-45deg) scaleY(var(--scale-y));
+			}
+		}
+	}
+	&__input:active:checked + &__pop {
+		transform: translateX(1em) scale(var(--scale));
+
+		[dir="rtl"] & {
+			transform: translateX(-1em) scale(var(--scale));
+		}
+		&:after {
+			transform: rotate(15deg) scaleY(var(--scale-y));
+
+			[dir="rtl"] & {
+				transform: rotate(-15deg) scaleY(var(--scale-y));
+			}
+		}
+	}
+	&__label {
+		overflow: hidden;
+		position: absolute;
+		width: 1px;
+		height: 1px;
+	}
+}
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg: hsl(var(--hue),90%,10%);
+		--fg: hsl(var(--hue),90%,90%);
+	}
+	.switch {
+		&__input {
+			background-color: hsla(var(--hue),90%,30%,0);
+			box-shadow:
+				0 0 0 0.0625em hsl(var(--hue),90%,30%) inset,
+				0 0 0.125em 0.125em hsl(var(--hue),90%,60%,0);
+
+			&:checked {
+				background-color: hsl(var(--hue),90%,30%);
+			}
+			&:focus-visible {
+				box-shadow:
+					0 0 0 0.0625em hsl(var(--hue),90%,30%) inset,
+					0 0 0.125em 0.125em hsl(var(--hue),90%,60%);
+			}
+		}
+	}
+}
