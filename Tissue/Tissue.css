@@ -1,0 +1,290 @@
+:root {
+	--bdrs-s: 4px;
+	--bdrs-l: 16px;
+
+	--height: 10000vh;
+	--width: 64vmin;
+
+	--paper-max-height: calc(var(--width) * 5 / 6);
+	--paper-min-height: var(--tube-height);
+	--tube-height: calc(var(--width) / 3);
+	--tube-top: calc(50vh - var(--tube-height) / 2 + 4px);
+}
+
+/* Roll */
+@keyframes animate-roll {
+	to {
+		border-radius: var(--bdrs-s) var(--bdrs-s) 0 0;
+		top: calc((100vh - var(--tube-height)) / 2);
+	}
+}
+
+.roll {
+	animation: animate-roll linear forwards;
+	animation-timeline: scroll(root block);
+	border-radius: var(--bdrs-l) var(--bdrs-l) 0 0;
+	bottom: 0;
+	left: 50%;
+	overflow: hidden;
+	position: fixed;
+	top: calc((100vh - var(--paper-max-height)) / 2);
+	transform: translateX(-50%);
+	width: var(--width);
+	z-index: 1;
+}
+
+/* Paper */
+@keyframes animate-paper {
+	to {
+		border-radius: var(--bdrs-s);
+	}
+
+	99% {
+		visibility: hidden;
+	}
+
+	100% {
+		height: var(--paper-min-height);
+		visibility: hidden;
+	}
+}
+
+.paper {
+	height: var(--paper-max-height);
+	position: relative;
+	width: var(--width);
+}
+
+.paper::after {
+	animation: animate-paper forwards linear;
+	animation-timeline: scroll(root block);
+	background-color: oldlace;
+	background-image: radial-gradient(rgba(0 0 0 / 0.01) 40%, transparent 40%),
+		radial-gradient(rgba(0 0 0 / 0.01) 40%, transparent 40%),
+		linear-gradient(
+			to bottom,
+			whitesmoke,
+			transparent 10%,
+			transparent 80%,
+			hsla(43 74.4% 49% / 0.33)
+		),
+		linear-gradient(
+			to bottom,
+			whitesmoke,
+			transparent 25%,
+			transparent 65%,
+			rgba(0 0 0 / 0.2)
+		),
+		linear-gradient(to bottom, rgba(0 0 0 / 0.2), transparent 5%, transparent 65%);
+	background-position: 0 0, 4px 4px, 0 0, 0 0;
+	background-repeat: repeat, repeat, no-repeat, no-repeat, no-repeat;
+	background-size: 8px 8px, 8px 8px, contain, contain, contain;
+	border-radius: var(--bdrs-l);
+	content: "";
+	height: var(--paper-max-height);
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 1;
+}
+
+@keyframes animate-squares {
+	to {
+		left: 0;
+		transform: translateY(var(--tube-height));
+	}
+}
+
+.paper::before {
+	/* Squares */
+	--square-height: calc(var(--height) / 210);
+
+	animation: animate-squares forwards linear;
+	animation-timeline: scroll(root block);
+	background-image: radial-gradient(rgba(0 0 0 / 0.02) 50%, transparent 50%),
+		radial-gradient(rgba(0 0 0 / 0.02) 50%, transparent 50%),
+		repeating-linear-gradient(
+			to bottom,
+			oldlace var(--square-height),
+			oldlace calc(var(--square-height) + 2px),
+			floralwhite calc(var(--square-height) + 2px),
+			floralwhite calc(var(--square-height) * 2)
+		);
+	background-position: 0 0, 4px 4px, 0 0;
+	background-repeat: repeat, repeat, no-repeat;
+	background-size: 8px 8px, 8px 8px, contain;
+	box-shadow: 0px 0.3px 1.3px rgba(0, 0, 0, 0.125),
+		0px 2px 10px rgba(0, 0, 0, 0.125);
+	content: "";
+	height: var(--height);
+	left: -0.375rem;
+	position: absolute;
+	transform: translateY(calc(-100% + var(--tube-height)));
+	width: 100%;
+	z-index: 2;
+}
+
+/* Tube */
+@keyframes animate-tube {
+	to {
+		top: 0;
+	}
+
+	90% {
+		background-position: 5px 5px, 0 0, 100%, 0;
+	}
+
+	100% {
+		background-position: 5px 5px, 0 0, 0%, 0;
+	}
+}
+
+.tube {
+	animation: animate-tube forwards linear;
+	animation-timeline: scroll(root block);
+	background-image: radial-gradient(peru 10%, transparent 10%),
+		radial-gradient(peru 10%, transparent 10%),
+		repeating-linear-gradient(
+			-45deg,
+			transparent,
+			transparent 25%,
+			peru 25%,
+			transparent calc(25% + 3px),
+			peru calc(25% + 3px)
+		),
+		linear-gradient(to bottom, burlywood, burlywood, peru);
+	background-repeat: repeat, repeat, no-repeat;
+	background-size: 10px 10px, 10px 10px, 200%, 100%;
+	background-position: 5px 5px, 0 0, 100%, 0;
+	border-radius: var(--bdrs-s);
+	height: var(--tube-height);
+	position: relative;
+	top: calc((var(--paper-max-height) - var(--tube-height)) / 2);
+	width: var(--width);
+}
+
+/* Holder */
+@keyframes animate-shadow {
+	to {
+		height: var(--paper-min-height);
+	}
+}
+
+.holder::before {
+	/* Shadow for roll */
+	animation: animate-roll linear forwards, animate-shadow linear forwards;
+	animation-timeline: scroll(root block);
+	border-radius: var(--bdrs-l);
+	box-shadow: 1.9px 4.2px 5.5px rgba(0, 0, 0, 0.051),
+		4.5px 10px 13.2px rgba(0, 0, 0, 0.073),
+		8.5px 18.9px 24.9px rgba(0, 0, 0, 0.09),
+		15.2px 33.7px 44.4px rgba(0, 0, 0, 0.107),
+		28.4px 63.1px 83.1px rgba(0, 0, 0, 0.129),
+		68px 151px 199px rgba(0, 0, 0, 0.18);
+	content: "";
+	height: var(--paper-max-height);
+	left: 50%;
+	position: fixed;
+	top: calc((100vh - var(--paper-max-height)) / 2);
+	transform: translateX(-50%);
+	width: var(--width);
+	z-index: 0;
+}
+
+.holder::after {
+	/* Holder */
+	background: linear-gradient(
+		to bottom,
+		black,
+		gray 15%,
+		white 18%,
+		gray 25%,
+		black 30%,
+		lightgray 50%,
+		white 55%,
+		gray 80%,
+		black 90%
+	);
+	border-left: solid rgba(255 255 255 / 0.5) 3px;
+	border-right: solid rgba(255 255 255 / 0.5) 3px;
+	border-radius: var(--bdrs-s);
+	box-shadow: 0px 4.2px 5.5px rgba(0, 0, 0, 0.051),
+		0px 10px 13.2px rgba(0, 0, 0, 0.073), 0px 18.9px 24.9px rgba(0, 0, 0, 0.09),
+		0px 33.7px 44.4px rgba(0, 0, 0, 0.107), 0px 63.1px 83.1px rgba(0, 0, 0, 0.129),
+		0px 151px 199px rgba(0, 0, 0, 0.18);
+	content: "";
+	height: 10vmin;
+	left: 50%;
+	position: fixed;
+	transform: translateX(-50%);
+	top: var(--tube-top);
+	width: calc(var(--width) + 10vmin);
+}
+
+/* Body */
+body {
+	background: goldenrod;
+	height: var(--height);
+	position: relative;
+}
+
+body::before {
+	background: linear-gradient(
+			to bottom right,
+			transparent,
+			rgba(255 0 0 / 0.375)
+		),
+		repeating-linear-gradient(
+			to right,
+			transparent,
+			transparent calc(25vmin - 10px),
+			honeydew calc(25vmin - 10px),
+			honeydew calc(25vmin + 0px),
+			transparent calc(25vmin + 0px)
+		),
+		repeating-linear-gradient(
+			to bottom,
+			goldenrod,
+			goldenrod 25vmin,
+			honeydew 25vmin,
+			honeydew calc(25vmin + 10px)
+		);
+	content: "";
+	inset: 0;
+	position: fixed;
+}
+
+body::after {
+	/* Debug: Centering */
+	background: linear-gradient(
+			to bottom,
+			transparent var(--tube-top),
+			red var(--tube-top),
+			red calc(var(--tube-top) + 1px),
+			transparent calc(var(--tube-top) + 1px)
+		),
+		linear-gradient(
+			to right,
+			transparent 50%,
+			red 50%,
+			red calc(50% + 1px),
+			transparent calc(50% + 1px)
+		);
+	/* 	content: ""; */
+	height: 100vh;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+/* Simple Resets */
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+}
