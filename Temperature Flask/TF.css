@@ -1,0 +1,15 @@
+body {
+background-color: #BCCCD0;
+  margin: 0;
+overflow: hidden;
+}
+
+#container{
+display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+}
+#canvas3d{
+  width: 300%;
+}
