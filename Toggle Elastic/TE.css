@@ -1,0 +1,175 @@
+body {
+  background: #1f1f23;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 5em;
+  gap: 0.5em;
+}
+
+@property --color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: red;
+}
+@property --light-on {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #0001;
+}
+@property --light-off {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #000d;
+}
+
+@keyframes squeeze {
+  0%, 100% { width: 0.95em; aspect-ratio: 1;  }
+  50% { width: 1.35em; aspect-ratio: 1.75; }
+}
+@keyframes squeeze2 {
+  0%, 100% { width: 0.95em; aspect-ratio: 1;  }
+  50% { width: 1.35em; aspect-ratio: 1.75; }
+}
+
+.ellastic {
+  --on: #af5;
+  --off: #d55;
+  --duration: 0.75s;
+  --color: var(--off);
+  --color-semi: color-mix(in srgb, var(--color) 50%, #0000);
+  --color-semi2: color-mix(in srgb, var(--color) 33%, #0000);
+  --color-semi3: color-mix(in srgb, var(--color) 15%, #fff0);
+  --light-on: #0001;
+  --light-off: #000d;
+  appearance: none;
+  font-size: 1em;
+  width: 2.5em;
+  aspect-ratio: 2.5;
+  border-radius: 3em;
+  border: 1px solid #0000;
+  position: relative;
+  color: var(--color);
+  filter: 
+    drop-shadow(0 0.025em 0.0125em #fff3)
+    drop-shadow(0 -0.025em 0.0125em #000c)
+    ;
+  transition: 
+    --color var(--duration) linear,
+    --light-on calc(var(--duration) / 2),
+    --light-off calc(var(--duration) / 2),
+    color var(--duration) linear;
+  atransition-delay: 0s, calc(var(--duration) / 1), 0s, 0s;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0.5em;
+    transform: translate(-50%, -50%);
+    width: 0.95em;
+    aspect-ratio: 1;
+    border-radius: 5em;
+    border: 1px solid #0000;
+    background: 
+      radial-gradient(at 50% 0, var(--color-semi), #0000 40%),
+      radial-gradient(at 50% 100%, var(--color-semi), #0000 40%),
+      radial-gradient(50% 50% at 50% 0, #fff2, #0000 90%),
+      radial-gradient(50% 50% at 50% 110%, #0007, #0000 90%),
+      radial-gradient(circle, #0000 0.12em, var(--color-semi3) 0.125em, #0000 0.5em),
+      radial-gradient(circle, #0000 0.12em, var(--color-semi2) 0.125em, #0000 0.4em),
+      radial-gradient(circle, #0000 0.12em, #fff1 0.125em, #fff0 0.25em),
+      radial-gradient(circle, #0000 0.12em, #2f2f33 0.125em);
+    ;
+    background-repeat: no-repeat;
+    box-shadow: 
+      inset 0 0 0.125em var(--color-semi),
+      0 0 0.2em #0005,
+      0 0.15em 0.1em #0008;
+    transition: left var(--duration) linear;
+    animation: squeeze var(--duration) 1 linear forwards;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    -webkit-mask:
+      radial-gradient(45% 75% at 50% -50%, #0000 99%, #000) 50% 0 / 2em 0.2em no-repeat,
+      radial-gradient(45% 75% at 50% 150%, #0000 99%, #000) 50% 100% / 2em 0.2em no-repeat,
+      linear-gradient(90deg, #000 0.55em, #0000 0 1.95em, #000 0),
+      linear-gradient(#000 0 0) 50% 50% / 2em 0.75em no-repeat
+      ;
+    border-radius: 3em;
+    background: 
+      /* left light */
+      radial-gradient(circle at 0.505em 50%, #0004, var(--light-on) 0.11em, #0000 0.12em),
+      radial-gradient(50% 100% at 0.505em 45%, #fff9 0.025em, #fff0 0.08em),
+
+      radial-gradient(circle at 0.505em 50%, #0000 0.025em, #0008 0.12em, #0000 0.13em),
+      radial-gradient(circle at 0.505em 50%, var(--off) 0.11em, #0000 0.12em),
+      radial-gradient(circle at 0.505em 50%, #000 0.10em, #0000 0.16em),
+      radial-gradient(circle at 0.505em 49%, #000 0.12em, #fff0 0.13em),
+      radial-gradient(circle at 0.505em 51%, #fff7 0.12em, #fff0 0.13em),
+      /* right light */
+      radial-gradient(circle at 2.005em 50%, #0004, var(--light-off) 0.11em, #0000 0.12em),
+      radial-gradient(50% 100% at 2.005em 45%, #fff9 0.025em, #fff0 0.08em),
+      radial-gradient(circle at 2.005em 50%, #0000 0.025em, #0008 0.12em, #0000 0.13em),
+      radial-gradient(circle at 2.005em 50%, var(--on) 0.11em, #0000 0.12em),
+      radial-gradient(circle at 2.005em 50%, #000 0.10em, #0000 0.16em),
+      radial-gradient(circle at 2.005em 49%, #000 0.12em, #fff0 0.13em),
+      radial-gradient(circle at 2.005em 51%, #fff7 0.12em, #fff0 0.13em),
+      /* background base */
+      radial-gradient(45% 100% at 50% 130%, #0007 50%, #0000) 50% 100% / 2em 0.2em no-repeat,
+      radial-gradient(45% 100% at 50% -30%, #0007 50%, #0000) 50% 0% / 2em 0.2em no-repeat,
+      #0c0c10a0;
+    box-shadow:
+      inset 0 0 0.1em 0.005em #000,
+      inset 0 0 0.25em #0007
+  }
+
+  &:checked {
+    --color: var(--on); 
+    --light-on: #000d;
+    --light-off: #0001;
+    atransition-delay: 0s, 0s, calc(var(--duration) / 1), 0s;
+
+    &::after {
+      left: 2em;
+      animation: squeeze2 var(--duration) 1 linear forwards;
+    }
+  }
+
+  &[disabled] {
+    --on: #aaa;
+    --off: #aaa;
+    &, &::before, &::after {
+      transition-duration: 0s !important;
+      animation-duration: 0s !important;
+    }
+  }
+}
+
+@media print {
+  .ellastic {
+    &, &::before, &::after {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+}
+
+@media (prefers-reduced-motion) {
+  .ellastic {
+    &, &::before, &::after {
+      transition-duration: 0s !important;
+      animation-duration: 0s !important;
+    }
+  }
+}
