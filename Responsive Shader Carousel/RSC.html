@@ -1,0 +1,331 @@
+<svg style="display: none;">
+  <path id="play" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M190.06 414l163.12-139.78a24 24 0 000-36.44L190.06 98c-15.57-13.34-39.62-2.28-39.62 18.22v279.6c0 20.5 24.05 31.56 39.62 18.18z" />
+  <path id="pause" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M176 96h16v320h-16zM320 96h16v320h-16z" />
+</svg>
+<main>
+  <ul class="slider">
+    <li class="slide">
+      <div class="visual"></div>
+      <div class="content">
+        <h2 class="title">Sophie</h2>
+        <p class="description">Frequency: 2π seconds. An enigmatic creature that creates fascinating patterns, honoring Sophie Germain's elegant mathematics. Her movements tell an eternal story.</p>
+        <button class="more ripple">
+          <div class="icon" role="button"><svg viewBox="0 0 512 512">
+              <use xlink:href="#play"></use>
+            </svg></div>
+        </button>
+    </li>
+    <li class="slide">
+      <div class="visual"></div>
+      <div class="content">
+        <h2 class="title">René</h2>
+        <p class="description">Frequency: 2π seconds. A smoky creature moving swiftly along the path laid down by the pioneering work of René Descartes embodies the guiding principle of the stage, where equations take on a timeless beauty.</p>
+        <button class="more ripple">
+          <div class="icon" role="button"><svg viewBox="0 0 512 512">
+              <use xlink:href="#play"></use>
+            </svg></div>
+        </button>
+    </li>
+    <li class="slide">
+      <div class="visual"></div>
+      <div class="content">
+        <h2 class="title">Ada</h2>
+        <p class="description">Frequency: 4π seconds. A vibrant organism, weaves intricate patterns celebrating the analytical dance of Ada Lovelace's mind. Her movements reflect the elegance and precision found in the world of algorithms.</p>
+        <button class="more ripple">
+          <div class="icon" role="button"><svg viewBox="0 0 512 512">
+              <use xlink:href="#play"></use>
+            </svg></div>
+        </button>
+    </li>
+    <li class="slide">
+      <div class="visual"></div>
+      <div class="content">
+        <h2 class="title">Doug</h2>
+        <p class="description">Frequency: π seconds. A dynamic creature, navigates its realm with the agility reminiscent of Douglas Engelbart's inventive spirit. His swift movements echo the groundbreaking innovations in computer interface design.</p>
+        <button class="more ripple">
+          <div class="icon" role="button"><svg viewBox="0 0 512 512">
+              <use xlink:href="#play"></use>
+            </svg></div>
+        </button>
+    </li>
+    <li class="slide">
+      <div class="visual"></div>
+      <div class="content">
+        <h2 class="title">Iannis</h2>
+        <p class="description">Frequency: 2π seconds. A visionary creator, conjures abstract patterns reflecting on the mathematical and artistic brilliance of Iannis Xenakis. His dance weaves a tapestry that transcends the boundaries between mathematics and art.</p>
+        <button class="more ripple">
+          <div class="icon" role="button"><svg viewBox="0 0 512 512">
+              <use xlink:href="#play"></use>
+            </svg></div>
+        </button>
+    </li>
+    <li class="slide">
+      <div class="visual"></div>
+      <div class="content">
+        <h2 class="title">Umar</h2>
+        <p class="description">Frequency: 4π seconds. A luminous figure, commemorating the profound insights of the Persian polymath Umar Khayyam. His graceful movements hint at the mesmerising beauty of what the human mind can create.</p>
+        <button class="more ripple">
+          <div class="icon" role="button"><svg viewBox="0 0 512 512">
+              <use xlink:href="#play"></use>
+            </svg></div>
+        </button>
+    </li>
+  </ul>
+  <nav class='nav'>
+    <div class="btn ripple prev">
+      <div class="icon" role="button"><svg viewBox="0 0 512 512">
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M244 400L100 256l144-144M120 256h292">
+          </path>
+        </svg></div>
+    </div>
+    <div class='btn ripple next'>
+      <div class="icon" role="button"><svg viewBox="0 0 512 512">
+          <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M268 112l144 144-144 144M392 256H100">
+          </path>
+        </svg></div>
+    </div>
+  </nav>
+</main>
+<script type="x-shader/x-fragment" data-title="Sophie">#version 300 es
+/*********
+* made by Matthias Hurrle (@atzedent)
+*/
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+out vec4 O;
+uniform vec2 resolution;
+uniform float time;
+#define R resolution
+#define T mod(time,6.2831)
+#define S smoothstep
+#define rot(a) mat2(cos(a+vec4(0,11,33,0)))
+#define hue(a) (.24+.6*cos(2.3*(a)+vec3(0,83,21)))
+void main(void) {
+	vec2 uv = (gl_FragCoord.xy-.5*R)/min(R.x,R.y),
+	p=uv;
+	vec3 col = vec3(0);
+
+	uv *= 18.;
+
+	uv += vec2(
+		sin(2.*T+uv.y),
+		cos(2.*T+uv.x)
+	)*.42;
+
+	for (float i=.0; i<3.; i++) {
+		col[int(i)]=vec3(
+				2.5/(i+1.)*cos(T+i+5.*atan(uv.x,uv.y))
+			)[int(i)]*pow(S(1.,.0,length(p)),6.);
+	}
+
+	col = pow(col,vec3(.4545));
+
+	col = sqrt(col);
+	col = S(1.,.0,.55/col);
+	col = vec3(length(col));
+	col *= vec3(1,.95,.9);
+	col = hue(hue(1.1*sqrt(col)));
+
+
+	O = vec4(col,1);
+}
+</script>
+<script type="x-shader/x-fragment" data-title="René">#version 300 es
+/*********
+* made by Matthias Hurrle (@atzedent)
+*/
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+out vec4 O;
+uniform float time;
+uniform vec2 resolution;
+#define R resolution
+#define T mod(time,6.2831)
+#define S smoothstep
+#define hue(a) (.24+.6*cos(2.3*(a)+vec3(0,83,21)))
+void main(void) {
+	vec2 uv = (gl_FragCoord.xy-.5*R)/min(R.x,R.y),
+	p = uv*8.;
+	vec3 col = vec3(0);
+
+	for (float i=1.; i<4.; i++) {
+		p.x += sin(i*p.y+T);
+		p.y += sin(i*p.x+T);
+		col[int(i-1.)] += length(p)-abs(uv.x);
+	}
+
+	col = pow(col,vec3(.4545));
+	col = sqrt(col);
+	col = S(1.,.0,.5/col);
+	col = vec3(length(col));
+	col *= vec3(1,.95,.9);
+	col = hue(hue(1.5*sqrt(col)));
+	col.r=.0;
+	col *= 1.4;
+
+	O = vec4(col,1);
+}
+</script>
+<script type="x-shader/x-fragment" data-title="Ada">#version 300 es
+/*********
+* made by Matthias Hurrle (@atzedent)
+*/
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+out vec4 O;
+uniform vec2 resolution;
+uniform float time;
+#define R resolution
+#define T mod(time,12.56637)
+#define S smoothstep
+#define rot(a) mat2(cos(a+vec4(0,11,33,0)))
+#define hue(a) (.24+.6*cos(2.3*(a)+vec3(0,83,21)))
+void main(void) {
+	vec2 uv = (gl_FragCoord.xy-.5*R)/min(R.x,R.y),
+	p=uv;
+	vec3 col = vec3(0);
+
+	uv *= 9.;
+
+	for (float i=.0; i<3.; i++) {
+		uv.x += sin(i*uv.y+T*.5)*.8;
+		uv.y += cos(1.2+sin(i*uv.x+T));
+		col[int(i)]+=1.2/distance(p,uv)-.9;
+	}
+
+	col = pow(col,vec3(.4545));
+	col = sqrt(col);
+	col = S(1.,.0,.35/col);
+	col = vec3(length(col));
+	col *= vec3(1,.95,.9);
+	col = hue(hue(1.8*sqrt(col)));
+
+	O = vec4(col,1);
+}
+</script>
+<script type="x-shader/x-fragment" data-title="Doug">#version 300 es
+/*********
+* made by Matthias Hurrle (@atzedent)
+*/
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+out vec4 O;
+uniform vec2 resolution;
+uniform float time;
+#define R resolution
+#define T mod(time,3.141892)
+#define S smoothstep
+#define rot(a) mat2(cos(a+vec4(0,11,33,0)))
+#define hue(a) (.24+.6*cos(2.3*(a)+vec3(0,83,21)))
+void main(void) {
+	vec2 uv = (gl_FragCoord.xy-.5*R)/min(R.x,R.y);
+	vec3 col = vec3(0);
+
+	uv *= 5.;
+
+	vec2 p = vec2(
+		sin(T+uv.y),
+		cos(T+uv.x)
+	)*.75;
+
+	for (float i=.0; i<3.; i++) {
+		col[int(i)]+=
+				1./(i+1.)*cos(2.*i-sin(length(p)/(.55+length(uv))));
+	}
+
+	col = pow(col,vec3(.4545));
+	col = sqrt(col);
+	col.r=col.g;
+	col = hue(hue(1.9*sqrt(col)));
+	col = pow(col, vec3(1.2))*1.2;
+
+	O = vec4(col,1);
+}
+</script>
+<script type="x-shader/x-fragment" data-title="Iannis">#version 300 es
+/*********
+* made by Matthias Hurrle (@atzedent)
+*/
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+out vec4 O;
+uniform vec2 resolution;
+uniform float time;
+#define R resolution
+#define T mod(time,6.2831)
+#define S smoothstep
+#define hue(a) (.24+.6*cos(2.3*(a)+vec3(0,83,21)))
+
+void main(void) {
+	vec2 uv=(gl_FragCoord.xy-.5*R)/min(R.x,R.y);
+	vec3 col=vec3(0);
+	uv *= 11.;
+	uv.x+=sin(uv.y+T);
+	uv.y+=cos(1.+sin(uv.x+T));
+	col.r+=.075*tan(2./floor(1.+2.*length(uv)));
+
+	col = pow(abs(col), vec3(.4545));
+	col = sqrt(col);
+	col = S(1.,.0,.375/col);
+	col = vec3(length(col));
+	col = pow(hue(hue(sqrt(col))),vec3(1.2))*1.2;
+
+	O = vec4(col,1);
+}</script>
+<script type="x-shader/x-fragment" data-title="Umar">#version 300 es
+/*********
+* made by Matthias Hurrle (@atzedent)
+*/
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+out vec4 O;
+uniform vec2 resolution;
+uniform float time;
+#define R resolution
+#define T mod(time,12.56637)
+#define S smoothstep
+#define rot(a) mat2(cos(a+vec4(0,11,33,0)))
+#define hue(a) (.24+.6*cos(2.3*(a)+vec3(0,83,21)))
+void main(void) {
+	vec2 uv = (gl_FragCoord.xy-.5*R)/min(R.x,R.y),
+	p=uv;
+	vec3 col = vec3(0);
+
+	uv *= 2.;
+  
+  for (float i=.0; i<3.; i++) {
+		uv += vec2(
+			sin(i*uv.y+T*.5)*.8,
+			cos(1.2+sin(i*uv.x+T))
+		)*.12;
+		col[int(i)]+=cos(8.*atan(uv.x,uv.y))-length(1.4*uv);
+	}
+
+	col = pow(col,vec3(.4545));
+	col = sqrt(col);
+	col = S(1.,.0,.5/col);
+	col = vec3(length(col));
+	col *= vec3(1,.95,.9);
+	col = hue(hue(1.2*sqrt(col)));
+
+	O = vec4(col,1);
+}
+</script>
