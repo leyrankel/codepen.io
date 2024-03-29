@@ -1,0 +1,287 @@
+* {
+	border: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+:root {
+	--hue: 223;
+	--trans-dur: 0.3s;
+	font-size: calc(48px + (96 - 48) * (100vw - 320px) / (2560 - 320));
+}
+body,
+input {
+	color: hsl(var(--hue),90%,10%);
+	font: 1em/1.5 sans-serif;
+}
+body {
+	background-image: linear-gradient(45deg,hsl(var(--hue),90%,67%),hsl(var(--hue),90%,70%));
+	display: flex;
+	height: 100vh;
+}
+.switch {
+	$ballSize: 1.375em;
+	--dur: 2.5s;
+	margin: auto;
+	position: relative;
+
+	&__ball,
+	&__ball:before,
+	&__ball-shadow,
+	&__ball-shadow:before,
+	&__ball-shadow-outer,
+	&__ball-texture,
+	&__label,
+	&__shadow,
+	&__shadow:before,
+	&__shadow:after,
+	&__shadow-inner {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	&__ball,
+	&__ball:before,
+	&__ball-shadow,
+	&__ball-shadow-outer,
+	&__shadow {
+		border-radius: 50%;
+		pointer-events: none;
+		width: $ballSize;
+		height: $ballSize;
+	}
+	&__ball,
+	&__shadow {
+		overflow: hidden;
+	}
+	&__ball,
+	&__ball-shadow,
+	&__ball-shadow-outer {
+		z-index: 3;
+	}
+	&__ball {
+		top: 0.0625em;
+		left: 0.0625em;
+
+		&:before {
+			background-image: linear-gradient(60deg,hsl(var(--hue),90%,10%,0.2),hsla(var(--hue),90%,10%,0));
+			box-shadow:
+				0.125em -0.0625em 0.125em hsla(var(--hue),90%,70%,0.5) inset,
+				0.25em -0.125em 0.25em hsla(var(--hue),90%,10%,0.5) inset,
+				-0.0625em 0.0625em 0.0625em hsla(0,0%,100%,0.7) inset;
+			content: "";
+			z-index: 1;
+		}
+		&-shadow {
+			top: 0.0625em;
+  			left: 0.0625em;
+			width: $ballSize * 0.5;
+
+			&:before {
+				background-color: hsla(var(--hue),90%,40%,0.7);
+				border-radius: 100% 0 0 100% / 50% 0 0 50%;
+				content: "";
+				width: 100%;
+				height: 100%;
+				transform: rotate(-15deg) scale(1.15,1);
+				transform-origin: 100% 50%;
+			}
+			&-outer {
+				box-shadow: 0 0 0.25em hsl(var(--hue),90%,30%);
+				top: 0.3125em;
+				left: 0.0625em;
+				width: $ballSize - 0.5;
+				height: $ballSize - 0.5;
+			}
+		}
+		&-texture {
+			background: url("https://assets.codepen.io/416221/speckled.jpg") 0 0 / 100% 100%;
+			right: 0;
+			left: auto;
+			width: 300%;
+			height: 100%;
+		}
+	}
+	&,
+	&__input {
+		border-radius: 50%;
+		position: relative;
+		-webkit-tap-highlight-color: transparent;
+	}
+	&__input,
+	&__shadow,
+	&__shadow-inner {
+		border-radius: 0.75em;
+		width: 3em;
+		height: 1.5em;
+	}
+	&__input {
+		box-shadow:
+			-0.125em 0.25em 0.25em hsl(var(--hue),90%,63%) inset,
+			-0.125em -0.125em 0.25em hsl(var(--hue),90%,68%) inset,
+			0 -0.0625em 0.125em hsl(var(--hue),90%,60%),
+			0 0 0.25em hsl(var(--hue),90%,78%);
+		cursor: pointer;
+		display: block;
+		-webkit-appearance: none;
+		appearance: none;
+
+		&:before,
+		&:after {
+			content: "";
+			display: block;
+			position: absolute;
+			width: 50%;
+			height: 100%;
+			z-index: 2;
+		}
+		&:before {
+			border-radius: 50% 0 0 50%;
+			box-shadow: 0.0625em 0.0625em 0.0625em hsla(var(--hue),90%,40%,0.5) inset;
+			-webkit-mask: linear-gradient(-45deg,hsla(0,0%,0%,0) 50%,hsl(0,0%,0%));
+		}
+		&:after {
+			background: linear-gradient(69deg,hsla(var(--hue),90%,30%,0) 60%,hsla(var(--hue),90%,30%,0.75) 65%,hsla(var(--hue),90%,30%,1) 80%);
+			border-radius: 0 50% 50% 50%;
+			box-shadow: -0.0625em 0.0625em 0.0625em hsl(var(--hue),90%,70%) inset;
+			clip-path: polygon(16% 0,100% 0,100% 100%,65% 100%);
+			-webkit-mask: linear-gradient(90deg,hsla(0,0%,0%,0) 20%,hsl(0,0%,0%));
+			opacity: 0;
+			right: 0;
+		}
+	}
+	&__input:checked ~ &__ball,
+	&__input:checked ~ &__ball-shadow,
+	&__input:checked ~ &__ball-shadow:before,
+	&__input:checked ~ &__ball-shadow-outer,
+	&__input:checked ~ &__ball &__ball-texture,
+	&__input:checked:before,
+	&__input:checked:after {
+		animation: ball-roll var(--dur) forwards;
+	}
+	&__input:checked ~ &__ball-shadow {
+		animation-name: ball-roll-shadow;
+	}
+	&__input:checked ~ &__ball-shadow:before {
+		animation-name: ball-roll-shadow-tilt;
+	}
+	&__input:checked ~ &__ball &__ball-texture {
+		animation-name: ball-roll-texture;
+	}
+	&__input:checked:before {
+		animation-name: ball-input-before;
+	}
+	&__input:checked:after {
+		animation-name: ball-input-after;
+	}
+	&__input:disabled {
+		cursor: not-allowed;
+	}
+	&__label {
+		overflow: hidden;
+		width: 1px;
+		height: 1px;
+	}
+	&__shadow {
+		&:before,
+		&:after {
+			content: "";
+		}
+		&:before {
+			background-color: hsl(var(--hue),70%,50%);
+			border-radius: 0.5em;
+			top: -0.25em;
+			left: 0.25em;
+			width: 2em;
+			height: 0.5em;
+		}
+		&:after {
+			box-shadow: -0.5em 0 0 hsl(var(--hue),70%,50%) inset;
+			border-radius: 0 50% 0 15%;
+			top: 0;
+			right: 0;
+			left: auto;
+			width: 1em;
+			height: 1.5em;
+			transform: rotate(-24deg);
+		}
+		&-inner {
+			box-shadow: -0.0625em 0.0625em 0 hsl(var(--hue),70%,45%) inset;
+			z-index: 1;
+		}
+	}
+}
+
+/* Animation */
+@keyframes ball-input-before {
+	from,
+	to {
+		animation-timing-function: linear;
+		opacity: 1;
+	}
+	15% {
+		animation-timing-function: cubic-bezier(0.33,1,0.68,1);
+		opacity: 0;
+	}
+}
+@keyframes ball-input-after {
+	from,
+	7.5%,
+	45%,
+	to {
+		animation-timing-function: linear;
+		opacity: 0;
+	}
+	15% {
+		animation-timing-function: cubic-bezier(0.33,1,0.68,1);
+		opacity: 1;
+	}
+}
+@keyframes ball-roll {
+	from,
+	to {
+		animation-timing-function: linear;
+		transform: translateX(0);
+	}
+	15% {
+		animation-timing-function: cubic-bezier(0.33,1,0.68,1);
+		transform: translateX(1.5em);
+	}
+}
+@keyframes ball-roll-shadow {
+	from,
+	to {
+		animation-timing-function: linear;
+		opacity: 1;
+		transform: translateX(0);
+	}
+	15% {
+		animation-timing-function: cubic-bezier(0.33,1,0.68,1);
+		opacity: 0.7;
+		transform: translateX(1.5em);
+	}
+}
+@keyframes ball-roll-shadow-tilt {
+	from,
+	to {
+		animation-timing-function: linear;
+		transform: rotate(-15deg) translateY(0) scale(1.15,1);
+	}
+	7.5%,
+	30% {
+		animation-timing-function: cubic-bezier(0.33,1,0.68,1);
+		transform: rotate(-15deg) translateY(5%) scale(1.75,0.9325);
+	}
+}
+@keyframes ball-roll-texture {
+	from,
+	to {
+		animation-timing-function: linear;
+		transform: translateX(0);
+	}
+	15% {
+		animation-timing-function: cubic-bezier(0.33,1,0.68,1);
+		transform: translateX(33.33%);
+	}
+}
