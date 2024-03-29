@@ -1,0 +1,118 @@
+body {
+  --cream: rgb(254 242 215);
+  --red-orange: rgb(228 79 44);
+  --red: rgb(223 30 45);
+  --orange: rgb(235 141 40);
+  --black: rgb(51 17 8);
+
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 2;
+  background-color: var(--cream);
+  background-image: url(https://assets.codepen.io/1074902/noise-version-3.svg);
+  box-shadow: inset 0 0 150px 10px rgb(218 190 126 / 0.5);
+}
+
+.scrollTarget {
+  position: absolute;
+  height: 500vh;
+  width: 100px;
+  top: 0;
+  z-index: 0;
+}
+
+.circles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+}
+
+.circle {
+  position: absolute;
+  border-radius: 100%;
+  aspect-ratio: 1 / 1;
+  background-image: url(https://assets.codepen.io/1074902/noise-version-4.svg);
+}
+
+.circle.top,
+.circle.bottom {
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.circle.largest {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  aspect-ratio: 1/1;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index: 2;
+}
+
+.circle.large {
+  width: 300px;
+}
+
+.circle.medium {
+  width: 235px;
+}
+
+.circle.small {
+  width: 150px;
+}
+
+.bg-orange {
+  background-color: var(--orange);
+}
+
+.bg-red-orange {
+  background-color: var(--red-orange);
+}
+
+.bg-red {
+  background-color: var(--red);
+}
+
+.bg-black {
+  background-color: var(--black);
+}
+
+.circle.bottom {
+  translate: 0 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.circle.large.inner.clip-path {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 50%;
+  translate: -50% 0;
+  z-index: 5;
+  opacity: 1;
+}
+
+.circle.bottom .inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  overflow: hidden;
+  opacity: 0;
+}
