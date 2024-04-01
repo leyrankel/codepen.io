@@ -1,0 +1,331 @@
+%centered {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+%full {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+}
+
+%hollowed {
+	mask-image: radial-gradient(closest-side, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8) 75%, white);
+}
+
+%light {
+	display: block;
+	width: var(--width);
+	height: var(--size);
+	position: absolute;
+	animation: move var(--speed) linear infinite forwards;
+	filter: blur(2px);
+	
+	&::before, &::after {
+		content: '';
+		display: block;
+		position: absolute;
+		height: 100%;
+		aspect-ratio: 1/1;
+		border-radius: 100%;
+		background-color: currentColor;
+		@extend %hollowed;
+	}
+	
+	&::before {
+		left: 0;
+	}
+	
+	&::after {
+		right: 0;
+	}
+}
+
+body {
+	background-image: linear-gradient(to bottom, #334, #111);
+}
+
+.container {
+	perspective: 100rem;
+	animation: bump 5s linear 3s infinite forwards;
+	
+	&, > * {
+		@extend %full;
+		@extend %centered;
+	}
+	
+	&, * {
+		// outline: solid 1px white;
+		transform-style: preserve-3d;
+	}
+	
+	.street-lamps {
+		.street-lamp {
+			--size: 28rem;
+			--width: 80rem;
+			--startZ: -1000rem;
+			--endZ: 100rem;
+			--speed: 10s;
+			--size-mod: 0.4;
+			@extend %centered;
+			@extend %light;
+			color: #ffde6b;
+			margin-top: -50rem;
+			margin-left: -15rem;
+			
+			@for $i from 1 through 5 {
+				&:nth-of-type(#{$i}) {
+					animation-delay: #{-$i * 2}s;
+				}
+			}
+		}
+	}
+	
+	.cars-incoming {
+		.car, .reflect {
+			--size: 24rem;
+			--width: 20rem;
+			--startZ: -1000rem;
+			--endZ: 100rem;
+			--speed: 3s;
+			--size-mod: 0.4;
+			@extend %centered;
+			@extend %light;
+			color: white;
+			margin-top: 16rem;
+			margin-left: -90rem;
+			
+			&:nth-last-of-type(2) {
+				--speed: 3s;
+				color: white;
+				animation-delay: -0.5s;
+				--width: 22rem;
+				margin-left: -140rem;
+				margin-top: 18rem;
+			}
+			
+			&:nth-last-of-type(3) {
+				animation-delay: -1.8s;
+				margin-top: 15rem;
+				color: white;
+			}
+		}
+	}
+	
+	.cars-going {
+		&, &-flash {
+			.car, .reflect {
+				--size: 20rem;
+				--width: 20rem;
+				--startZ: -1000rem;
+				--endZ: 100rem;
+				--speed: 12s;
+				--size-mod: 0.4;
+				@extend %centered;
+				@extend %light;
+				color: #ff4d22;
+				margin-top: 16rem;
+				margin-left: 50rem;
+			}
+		}
+		
+		&-flash {
+			.car, .reflect {
+				color: #ffbf3a;
+				--width: 24rem;
+				--aproach-alpha: 0.5;
+				animation-name: move, approach2 !important;
+				
+				&::before {
+					display: none;
+				}
+				
+				&::after {
+					animation: flash 1s infinite linear forwards;
+				}
+			}
+			
+			.reflect {
+				--aproach-alpha: 0.1;
+			}
+		}
+	}
+	
+	.city-lights {
+		.light {
+			--size: 28rem;
+			--width: 200rem;
+			--startZ: -1000rem;
+			--endZ: 100rem;
+			--speed: 10s;
+			--opacity: 0.2;
+			@extend %centered;
+			@extend %light;
+			color: #9adeff;
+			margin-top: -30rem;
+			margin-left: -15rem;
+			
+			&:nth-child(1) {
+				color: #9adeff;
+				&::after {
+					display: none;
+				}
+			}
+			
+			&:nth-child(2) {
+				--width: 220rem;
+				animation-delay: -2s;
+				color: #d7ad52;
+				margin-top: -40rem;
+				&::after {
+					display: none;
+				}
+			}
+			
+			&:nth-child(3) {
+				--width: 210rem;
+				animation-delay: -3.4s;
+				color: #d7ad52;
+				margin-top: -40rem;
+				&::before {
+					display: none;
+				}
+			}
+			
+			&:nth-child(4) {
+				--width: 180rem;
+				animation-delay: -5s;
+				color: #8fbaff;
+				margin-top: -40rem;
+				&::before {
+					display: none;
+				}
+			}
+			
+			&:nth-child(5) {
+				--width: 190rem;
+				animation-delay: -7.5s;
+				color: #d7ad52;
+				margin-top: -40rem;
+				&::after {
+					display: none;
+				}
+			}
+		}
+	}
+	
+	.reflect {
+		--opacity: 0.2 !important;
+		margin-top: 32rem !important;
+		filter: blur(50px) !important;
+		animation-name: move, approach !important;
+	}
+}
+
+@keyframes move {
+	0% {
+		transform: translateZ(var(--startZ)) rotateX(var(--rotX, 0deg));
+		opacity: 0;
+	}
+	
+	50% {
+		opacity: calc(var(--opacity, 0.7) * 0.75);
+	}
+	
+	100% {
+		opacity: var(--opacity, 0.7);
+		transform: translateZ(var(--endZ)) rotateX(var(--rotX, 0deg));
+		height: calc(var(--size) * var(--size-mod, 0.5));
+	}
+}
+
+@keyframes approach {
+	0% {
+		opacity: 0;
+	}
+	
+	30% {
+		opacity: 0;
+	}
+	
+	75% {
+		opacity: var(--aproach-alpha, 0.1);
+	}
+}
+
+@keyframes approach2 {
+	0% {
+		opacity: 0;
+	}
+	
+	60% {
+		opacity: 0;
+	}
+	
+	61% {
+		opacity: var(--aproach-alpha, 0.1);
+	}
+}
+
+@keyframes flash {
+	0% {
+		opacity: 0;
+	}
+	
+	40% {
+		opacity: 0;
+	}
+	
+	50% {
+		opacity: 1;
+	}
+	
+	90% {
+		opacity: 1;
+	}
+	
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes bump {
+	0% {
+		transform: translateY(0px);
+	}
+	
+	10% {
+		transform: translateY(2px);
+	}
+	
+	20% {
+		transform: translateY(-1px);
+	}
+	
+	25% {
+		transform: translateY(2px);
+	}
+	
+	31% {
+		transform: translateY(-1px);
+	}
+	
+	49% {
+		transform: translateY(0px);
+	}
+	
+	60% {
+		transform: translateY(0px);
+	}
+	
+	90% {
+		transform: translateY(1px);
+	}
+	
+	100% {
+		transform: translateY(0px);
+	}
+}
