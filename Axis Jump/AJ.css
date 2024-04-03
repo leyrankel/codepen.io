@@ -1,0 +1,24 @@
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	color: hsl(209 61% 16%);
+	background: hsl(200 88% 90%);
+	min-block-size: 100svb;
+	display: grid;
+	place-items: center;
+}
+
+body {
+	background-size: 32px;
+	background-repeat: no-repeat;
+	background-position: bottom 10px right 16px;
+	background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.5 -0.5 1 1">\
+  <path fill="hsl(196 94% 67%)" d="M -0.5 -0.25 0 -0.5 0.5 -0.25 0 0" />\
+  <path fill="hsl(202 83% 41%)" d="M 0 0.5 0.5 0.25 0.5 -0.25 0 0" />\
+  <path fill="hsl(199 84% 55%)" d="M -0.5 0.25 0 0.5 0 0 -0.5 -0.25" />\
+</svg>');
+}
