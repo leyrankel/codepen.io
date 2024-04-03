@@ -1,0 +1,93 @@
+<div class="btn">
+    <canvas></canvas>
+    <button>click me</button>
+</div>
+
+<script type="x-shader/x-fragment" id="vertShader">
+    precision mediump float;
+
+    varying vec2 vUv;
+    attribute vec2 a_position;
+
+    void main() {
+        vUv = a_position;
+        gl_Position = vec4(a_position, 0.0, 1.0);
+    }
+</script>
+
+
+<script type="x-shader/x-fragment" id="fragShader">
+    precision mediump float;
+
+    varying vec2 vUv;
+    uniform vec2 u_scale;
+    uniform float u_time;
+    uniform float u_extra_width;
+    uniform float u_ratio;
+    uniform float u_click_time;
+    uniform float u_speed;
+    uniform float u_size;
+    uniform vec3 u_color;
+    uniform vec3 u_mid_color;
+
+    #define PI 3.14159265358979323846
+    #define TWO_PI 6.28318530718
+    #define DOTS_NUMBER 25.
+
+    float rand(vec2 n) {
+        return fract(cos(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
+    }
+
+    float get_power_shape(vec2 center) {
+        float s = 1. - length(center);
+        s = smoothstep(u_size, 1., s);
+        return s;
+    }
+
+    void main() {
+
+        vec2 uv = vUv;
+        uv.x *= u_ratio;
+
+        float time = .001 * u_speed * u_time;
+        float click_time = 1. - .5 * pow(2.8 * (u_click_time - .5), 2.);
+
+        float highlight = 0.;
+        float shape = 0.;
+
+        for (int i = 0; i < int(DOTS_NUMBER); i++) {
+            vec2 c = vec2(0.);
+            vec2 randomizer = vec2(rand(vec2(float(i), 0.)), rand(vec2(float(i))));
+
+            // extra spacing on x-axis
+            c.x += u_extra_width * 2. * u_ratio * ((float(i) + .5) / DOTS_NUMBER - .5);
+
+            // time per dot
+            float t = time;
+            t *= (.5 + .5 * pow(randomizer.y, .2));
+            t += TWO_PI * randomizer.y;
+
+            // floating
+            c.x += .4 * cos(.4 * t + randomizer.x * TWO_PI);
+            c.y += max(.02, .2 * randomizer.x) * sin(t - cos(.5 * t));
+
+            // splashing
+            float dist = pow(randomizer.y, 1.5);
+            float angle = float(i) / DOTS_NUMBER * TWO_PI;
+            c.x += dist * cos(angle) * click_time;
+            c.y += .8 * dist * sin(angle) * click_time;
+
+            float s = get_power_shape(uv + c);
+            shape += s;
+            highlight += 10. * pow(s, 50.);
+        }
+
+        float contour = smoothstep(.45, .5, shape);
+        vec3 color = mix(u_color, u_mid_color, smoothstep(0., 10., highlight));
+
+        shape = smoothstep(.1, .7, shape);
+        color = shape * color;
+
+        gl_FragColor = vec4(color, contour);
+    }
+</script>
