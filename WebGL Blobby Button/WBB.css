@@ -1,0 +1,60 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn {
+    height: 370px;
+    position: relative;
+}
+.btn canvas {
+    display: block;
+    height: 100%;
+}
+.btn button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    font-size: 20px;
+    text-shadow: 0 0 3px #ffffff;
+    padding: 20px;
+    background: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    opacity: .9;
+}
+.btn button:hover {
+    color: deeppink;
+}
+.btn button:active {
+    color: cyan;
+}
+
+
+.lil-gui {
+    --width: 350px;
+    max-width: 90%;
+    --widget-height: 20px;
+    font-size: 15px;
+    --input-font-size: 15px;
+    --padding: 10px;
+    --spacing: 10px;
+    --slider-knob-width: 5px;
+    --background-color: rgba(5, 0, 15, .9);
+    --widget-color: rgba(255, 255, 255, .3);
+    --focus-color: rgba(255, 255, 255, .4);
+    --hover-color: rgba(255, 255, 255, .5);
+    --font-family: monospace;
+    z-index: 1;
+}
