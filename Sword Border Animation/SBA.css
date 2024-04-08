@@ -1,0 +1,203 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,700");
+
+/* global vars */
+$font: "Montserrat", sans-serif;
+$text-color: #ececec;
+$body-bg-color: #1f2029;
+$avatar-bg-color: #5c0000;
+$avatar-border-color: darken($avatar-bg-color, 10%);
+$avatar-bg-gradient-color-start: #ff0000;
+$avatar-bg-gradient-color-end: #5c0000;
+
+/* reset & base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background-color: $body-bg-color;
+  color: $text-color;
+  font-family: $font;
+  font-weight: 400;
+  font-size: 1.4rem;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  & h1 {
+    width: 100%;
+    margin: 20vh 0 10vh 0;
+    font-size: clamp(3rem, 4vw, 4rem);
+    font-weight: 300;
+    color: $text-color;
+    text-align: center;
+  }
+
+  & .avatar__box {
+    display: flex;
+    width: 20rem;
+    height: 20rem;
+    // padding: 0.4rem;
+    align-self: center;
+    flex-direction: column;
+    // background-color: $avatar-bg-color;
+    // border: 0.2rem solid $avatar-bg-color;
+    border-radius: 2rem;
+    filter: drop-shadow(0.2rem 0.4rem 0.6rem rgba(0, 0, 0, 0.75));
+    transition: 0.25s ease all;
+    overflow: hidden;
+    & .avatar__box-inner {
+      position: relative;
+      display: flex;
+      width: 100%;
+      height: 100%;
+      padding: 1em;
+      // border-radius: 2rem;
+      background-color: rgba($avatar-bg-gradient-color-end, 0.35);
+      overflow: hidden;
+      & .line {
+        position: absolute;
+        background: $avatar-bg-gradient-color-start;
+        filter: blur(0.2rem);
+        opacity: 0.7;
+        &:nth-of-type(1) {
+          top: 0.1rem;
+          left: -100%;
+          width: 100%;
+          height: 1rem;
+          // background: linear-gradient(45deg, transparent, #fff);
+          border-top-left-radius: 100%;
+          border-top-right-radius: 1rem;
+          border-bottom-right-radius: 1rem;
+          border-bottom-left-radius: 100%;
+          animation: animate-left 1s linear infinite;
+        }
+        &:nth-of-type(2) {
+          top: -100%;
+          right: 0.1rem;
+          width: 1rem;
+          height: 100%;
+          // background: linear-gradient(90deg, transparent, #fff);
+          border-top-left-radius: 100%;
+          border-top-right-radius: 1rem;
+          border-bottom-right-radius: 1rem;
+          border-bottom-left-radius: 100%;
+          animation: animate-top 1s linear infinite;
+          animation-delay: 0.25s;
+        }
+        &:nth-of-type(3) {
+          bottom: 0.1rem;
+          right: -100%;
+          width: 100%;
+          height: 1rem;
+          // background: linear-gradient(135deg, transparent, #fff);
+          border-top-left-radius: 100%;
+          border-top-right-radius: 1rem;
+          border-bottom-right-radius: 1rem;
+          border-bottom-left-radius: 100%;
+          animation: animate-right 1s linear infinite;
+          animation-delay: 0.5s;
+        }
+        &:nth-of-type(4) {
+          bottom: -100%;
+          left: 0.1rem;
+          width: 1rem;
+          height: 100%;
+          // background: linear-gradient(180deg, transparent, #fff);
+          border-top-left-radius: 100%;
+          border-top-right-radius: 1rem;
+          border-bottom-right-radius: 1rem;
+          border-bottom-left-radius: 100%;
+          animation: animate-bottom 1s linear infinite;
+          animation-delay: 0.75s;
+        }
+      }
+      & .avatar {
+        position: relative;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        // border: 0.2rem solid $avatar-border-color;
+        border-radius: 1.2rem;
+        background: linear-gradient(
+          0deg,
+          $avatar-bg-gradient-color-start,
+          $avatar-bg-gradient-color-end
+        );
+        &::after {
+          content: " ";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-image: url("https://assets.codepen.io/1963991/sword.png");
+          background-size: 4rem;
+          background-repeat: no-repeat;
+          background-position: center center;
+          transform: rotate3d(0, 0, 1, 43deg);
+        }
+      }
+    }
+  }
+}
+
+@keyframes animate-left {
+  0% {
+    left: -100%;
+  }
+  50%,
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes animate-top {
+  0% {
+    top: -100%;
+  }
+  50%,
+  100% {
+    top: 100%;
+  }
+}
+
+@keyframes animate-right {
+  0% {
+    right: -100%;
+  }
+  50%,
+  100% {
+    right: 100%;
+  }
+}
+
+@keyframes animate-bottom {
+  0% {
+    bottom: -100%;
+  }
+  50%,
+  100% {
+    bottom: 100%;
+  }
+}
