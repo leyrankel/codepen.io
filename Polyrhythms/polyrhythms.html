@@ -1,0 +1,70 @@
+<div class="shapeSelections">
+	<div class="btn-row">
+		<button class="line active">
+			<svg viewBox="-10 -10 120 120">
+				<path d="M50 0 v100z" fill="none" stroke="#0f0" stroke-width="4" />
+			</svg>
+		</button>
+		<button class="tri active">
+			<svg viewBox="-10 -10 120 120">
+				<path d="M50 0 l57.735026918962582 100h-115.470053837925164z" fill="none" stroke="#00f" stroke-width="4" />
+			</svg>
+		</button>
+		<button class="square active">
+			<svg viewBox="-10 -10 120 120">
+				<path d="M50 0 l50 50l-50 50l-50 -50z" fill="none" stroke="#f00" stroke-width="4" />
+			</svg>
+		</button>
+		<button class="pent active">
+			<svg viewBox="-10 -10 120 120">
+				<path d="M50 0L102.57311078393393 38.19660081406526L82.4919693587848 99.99999918593474L17.508030641215207 99.99999918593474L-2.5731107839339344 38.19660081406526z" fill="none" stroke="#ff0" stroke-width="4" />
+			</svg>
+		</button>
+	</div>
+	<input type="range" min="500" max="5000" value="2000" class="slider">
+	<div class="btn-row">
+		<span class="sVal"><span class="slider-value">2000</span>ms</span>
+	</div>
+</div>
+<div class="btn-row">
+<svg id="polyrythm" viewBox="-10 -10 120 120">
+	<!-- 	<defs> -->
+	<path id="p2" d="M50 0 v100z" fill="none" stroke="#0f0" stroke-width="2" />
+	<path id="p3" d="M50 0 l57.735026918962582 100h-115.470053837925164z" fill="none" stroke="#00f" stroke-width="2" />
+	<path id="p4" d="M50 0 l50 50l-50 50l-50 -50z" fill="none" stroke="#f00" stroke-width="2" />
+	<path id="p5" d="M50 0L102.57311078393393 38.19660081406526L82.4919693587848 99.99999918593474L17.508030641215207 99.99999918593474L-2.5731107839339344 38.19660081406526z" fill="none" stroke="#ff0" stroke-width="2" />
+	<!-- 	</defs> -->
+
+	<circle id="c2" fill="#fff" stroke="#0f0" stroke-width="2" cx="0" cy="0" r="5">
+		<animateMotion id="a2" class="move" href="#c2" dur="2000ms" begin="0s" fill="freeze" repeatCount="indefinite">
+			<mpath href="#p2" />
+		</animateMotion>
+	</circle>
+	<circle id="c3" fill="#fff" stroke="#00f" stroke-width="2" cx="0" cy="0" r="5">
+		<animateMotion id="motion" class="move" href="#c3" dur="2000ms" begin="0s" fill="freeze" repeatCount="indefinite">
+			<mpath href="#p3" />
+		</animateMotion>
+	</circle>
+	<circle id="c4" fill="#fff" stroke="#f00" stroke-width="2" cx="0" cy="0" r="5">
+		<animateMotion href="#c4" class="move" dur="2000ms" begin="0s" fill="freeze" repeatCount="indefinite">
+			<mpath href="#p4" />
+		</animateMotion>
+	</circle>
+	<circle id="c5" fill="#fff" stroke="#ff0" stroke-width="2" cx="0" cy="0" r="5">
+		<animateMotion href="#c5" class="move" dur="2000ms" begin="0s" fill="freeze" repeatCount="indefinite">
+			<mpath href="#p5" />
+		</animateMotion>
+	</circle>
+</svg>
+</div>
+<button id="soundIcon" onclick="addSound()" title="Toggle Sound">
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" height="100%" width="100%">
+		<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+		<path d="M 22 9 Q 19 12 16 15 M 16 9 Q 19 12 22 15" stroke="darkorange">
+			<animate id="an2" attributeName="d" values="M 19 5 Q 24.75 12 19 19 M 15.5 8.5 Q 18.5 12 15.5 15.5; M 22 9 Q 19 12 16 15 M 16 9 Q 19 12 22 15" dur="500ms" begin="indefinite" repeatCount="none" fill="freeze" keyTimes="0;1" keySplines="0.1 0.9 0.1 0.9" calcMode="spline" />
+			<animate id="an1" attributeName="d" values="M 22 9 Q 19 12 16 15 M 16 9 Q 19 12 22 15; M 19 5 Q 24.75 12 19 19 M 15.5 8.5 Q 18.5 12 15.5 15.5" dur="500ms" begin="indefinite" repeatCount="none" fill="freeze" keyTimes="0;1" keySplines="0.1 0.9 0.1 0.9" calcMode="spline" />
+			<animate id="aan2" attributeName="stroke" values="#fff; darkorange" dur="500ms" begin="indefinite" repeatCount="none" fill="freeze" keyTimes="0;1" keySplines="0.1 0.9 0.1 0.9" calcMode="spline" />
+			<animate id="aan1" attributeName="stroke" values="darkorange; #fff" dur="500ms" begin="indefinite" repeatCount="none" fill="freeze" keyTimes="0;1" keySplines="0.1 0.9 0.1 0.9" calcMode="spline" />
+		</path>
+	</svg>
+</button>
