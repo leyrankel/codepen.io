@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Raleway:ital,wght@0,100..900;1,100..900&family=Shalimar&display=swap");
+
+/* ELEMENTS */
+header {
+	flex: 100%;
+}
+.container {
+	width: 250px;
+	height: 350px;
+	margin-block: 1.75em;
+}
+img {
+	max-width: 100%;
+	object-fit: cover;
+}
+.pics {
+	height: 0;
+	display: grid;
+	place-items: center;
+}
+.pics img {
+	transform: translateY(30px);
+	filter: drop-shadow(5px 10px 12px rgba(93 56 0 / 0.8));
+	opacity: 0;
+}
+.card {
+	position: relative;
+	display: grid;
+	place-items: center;
+	height: 100%;
+	background-color: #242424;
+	border: 3px solid rgba(115 51 128 / 1);
+	border-radius: 1rem;
+	box-shadow: 0px 10px 20px -5px rgba(93 56 0 / 1);
+	overflow: hidden;
+}
+
+.information {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	background: radial-gradient(circle at 100% 90%, #733380, #3f1c46);
+	z-index: 1;
+}
+.more {
+	position: absolute;
+	bottom: 0;
+	right: 5px;
+}
+
+/* TYPOGRAPHY */
+h1,
+h2 {
+	font-family: "Shalimar", cursive;
+	text-align: center;
+}
+h1 {
+	font-size: calc(2rem + 4vw);
+	color: #3f1c46;
+	line-height: 2;
+	width: fit-content;
+	padding-inline: 4vw;
+	margin-inline: auto;
+	background: #ffd391;
+	outline: 5px solid #3f1c46;
+	border-radius: 2vmin;
+}
+h2 {
+	font-size: 4rem;
+	letter-spacing: 2px;
+	color: #4a2c2a;
+	position: absolute;
+	width: 100%;
+	padding-block: 0.1em;
+	background: rgba(251 236 93 / 0.6);
+}
+h3 {
+	font-family: "Bebas Neue", sans-serif;
+	font-size: 1.75em;
+	text-align: center;
+	color: #fbec5d;
+	padding: 20px 15px;
+	border-bottom: dotted 3px white;
+}
+p {
+	font-family: "Raleway", sans-serif;
+	font-optical-sizing: auto;
+	font-size: 13pt;
+	line-height: 1.5;
+	text-align: center;
+	color: rgba(168, 101, 78, 1);
+	text-align: left;
+	padding: 20px;
+}
+p:first-of-type {
+	color: #fff;
+}
+.more a {
+	color: #fff;
+	text-decoration: none;
+	padding: 0 0.15em;
+	border-bottom: 1px solid #0000;
+	transition: border-bottom 0.3s ease-in-out;
+}
+.more a:hover {
+	border-bottom: 2px solid #fff;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+body {
+	display: grid;
+	place-items: center;
+	background: repeating-linear-gradient(90deg, #ffdba5 0 1em, #ffe3b9 0 2em) left /
+		2em 100%;
+}
+main {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 4em;
+	margin-block: 2em;
+}
