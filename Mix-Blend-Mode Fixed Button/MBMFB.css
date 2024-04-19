@@ -1,0 +1,92 @@
+@font-face {
+  font-family: "Geist Sans";
+  src: url("https://assets.codepen.io/605876/GeistVF.ttf") format("truetype");
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: hsl(0 0% 98%);
+  font-family: "Geist Sans", sans-serif;
+  overflow-x: hidden;
+}
+
+button {
+  position: fixed;
+  bottom: 3rem;
+  left: 50%;
+  translate: -50% 0;
+  font-size: 1.5rem;
+  font-family: "Geist Sans", sans-serif;
+  font-weight: 80;
+  padding: 1rem 4rem;
+  border-radius: 6px;
+  border: 0;
+  mix-blend-mode: difference;
+  transition: filter 0.2s;
+  background: white;
+  color: black;
+}
+
+button::before {
+  content: "Order now";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 2;
+  mix-blend-mode: none;
+}
+
+button::after {
+  content: "";
+  left: 8%;
+  right: 8%;
+  height: 12%;
+  top: 130%;
+  background: white;
+  position: absolute;
+  border-radius: 100px;
+  mix-blend-mode: difference;
+}
+
+button:is(:hover, :focus-visible) {
+  filter: brightness(0.5);
+}
+
+h1 {
+  font-weight: 120;
+  background: linear-gradient(hsl(0 0% 10%), hsl(0 0% 60%));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+section {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  font-size: clamp(2rem, 4vw + 1rem, 8rem);
+}
+
+main {
+  display: grid;
+  gap: 8rem;
+  justify-items: center;
+  padding-bottom: 50vh;
+}
+
+img {
+  height: 50vh;
+}
+
+img:nth-of-type(even) {
+  translate: -25% 0;
+}
+
+img:nth-of-type(odd) {
+  translate: 25% 0;
+}
